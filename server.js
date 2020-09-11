@@ -4,6 +4,7 @@ const cors = require("cors");
 const records = require("./dbSchema.js");
 const moment = require("moment");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 const app = express();
 app.use(express.json());
@@ -15,8 +16,7 @@ var counter = 0;
 app.use("/sources", express.static("sources"));
 app.set("view engine", "ejs");
 
-const connection_url =
-  "mongodb+srv://admin:bZa9WwIig3q0qivV@cluster0.h8nep.mongodb.net/BoardDB?retryWrites=true&w=majority";
+const connection_url = process.env.myURL;
 mongoose.connect(connection_url, {
   useCreateIndex: true,
   useNewUrlParser: true,
@@ -39,7 +39,7 @@ app.get("/home", (req, res) => {
 });
 
 app.get("/api/records", (req, res) => {
-  records.find((err, data) => {
+  records.find({}, "-_id -__v", (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -63,7 +63,23 @@ app.post("/api/postrecords", (req, res) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.status(201).send(data);
+      const {
+        TaskName,
+        TaskDescription,
+        Creator,
+        Duration,
+        createdAt,
+        expires,
+      } = data;
+      const result = {
+        TaskName: TaskName,
+        TaskDescription: TaskDescription,
+        Creator: Creator,
+        Duration: Duration,
+        createdAt: createdAt,
+        expires: expires,
+      };
+      res.status(201).send(result);
     }
   });
 });
