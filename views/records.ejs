@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../sources/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sub">
+            <h1><u>Add Tasks</u></h1>
+            <form class="flex" action="/api/postrecords" method="POST">
+                <label>
+                    <input type="text" name="TaskName" id="taskname" placeholder="Task Name" required>
+                </label>
+                <label>
+                    <input type="text" name="TaskDescription" id="taskdesc" placeholder="Task Description" required>
+                </label>
+                <label>
+                    <input type="text" name="Creator" id="creator" placeholder="Creator" required>
+                </label>
+                <label>
+                    <input type="number" min=0 name="Duration" id="duration" placeholder="Duration in minutes" required>
+                </label>
+                <button style="margin-top: 15px;" type="submit">Add Task</button>
+                <button style="margin-top: 15px;" type="reset" value="Reset">Clear</button>
+
+            </form>
+
+            <form style="padding-top: 10px;" action="/api/records" method="GET">
+                <button>Get All Tasks</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
